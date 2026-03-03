@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Elizabeth Martinez</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --bg:#0a0a0f;
+    --bg2:#0f0f18;
+    --bg3:#13131f;
+    --green:#4ade80;
+    --green2:#22c55e;
+    --accent:#7c3aed;
+    --text:#e2e8f0;
+    --muted:#94a3b8;
+    --border:#1e293b;
+    --card:#0f1623;
+  }
+  html{scroll-behavior:smooth;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
+
+  /* ─── NAV ─── */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:1.1rem 3rem;
+    background:rgba(10,10,15,0.85);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+  }
+  .logo{font-size:1.35rem;font-weight:700;color:var(--green);letter-spacing:.05em;}
+  nav ul{list-style:none;display:flex;gap:2rem;}
+  nav ul a{color:var(--muted);text-decoration:none;font-size:.9rem;letter-spacing:.05em;transition:color .2s;}
+  nav ul a:hover{color:var(--green);}
+
+  /* ─── HERO ─── */
+  #hero{
+    min-height:100vh;display:flex;flex-direction:column;
+    justify-content:center;padding:0 3rem;
+    position:relative;overflow:hidden;
+  }
+  #hero::before{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(ellipse 60% 50% at 70% 50%, rgba(74,222,128,.06) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .hero-label{
+    font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--green);margin-bottom:1.5rem;
+    display:flex;align-items:center;gap:.75rem;
+  }
+  .hero-label::before{content:'';width:2rem;height:1px;background:var(--green);}
+  h1.name{font-size:clamp(3rem,7vw,6rem);font-weight:800;line-height:1;color:#fff;margin-bottom:.75rem;}
+  h2.subtitle{font-size:clamp(1rem,2.5vw,1.5rem);font-weight:400;color:var(--muted);margin-bottom:2rem;}
+  .code-block{
+    display:inline-block;
+    background:var(--bg3);border:1px solid var(--border);
+    border-left:3px solid var(--green);
+    padding:.75rem 1.25rem;border-radius:4px;
+    font-family:'Courier New',monospace;font-size:.95rem;
+    color:var(--green);margin-bottom:3rem;
+  }
+  .scroll-hint{color:var(--muted);font-size:.8rem;letter-spacing:.1em;display:flex;align-items:center;gap:.5rem;}
+  .scroll-hint::after{content:'↓';color:var(--green);animation:bounce 1.5s infinite;}
+  @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(6px);}}
+
+  /* ─── SECTIONS ─── */
+  section{padding:6rem 3rem;max-width:1100px;margin:0 auto;}
+  .section-header{display:flex;align-items:center;gap:1rem;margin-bottom:3.5rem;}
+  .section-num{font-size:4rem;font-weight:800;color:rgba(74,222,128,.12);font-family:monospace;line-height:1;}
+  .section-title{font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:700;color:#fff;}
+  .section-line{flex:1;height:1px;background:var(--border);}
+
+  /* ─── ABOUT ─── */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;}
+  .about-text p{color:var(--muted);margin-bottom:1rem;font-size:.97rem;line-height:1.8;}
+  .skills-grid{display:grid;gap:1.5rem;}
+  .skill-card{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:8px;padding:1.25rem 1.5rem;
+    transition:border-color .2s;
+  }
+  .skill-card:hover{border-color:var(--green);}
+  .skill-card h4{color:var(--green);font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.5rem;}
+  .skill-card p{color:var(--muted);font-size:.88rem;line-height:1.6;}
+
+  /* ─── PROJECTS ─── */
+  .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;}
+  .project-card{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:10px;padding:1.75rem;
+    display:flex;flex-direction:column;gap:1rem;
+    transition:transform .2s,border-color .2s,box-shadow .2s;
+    position:relative;overflow:hidden;
+  }
+  .project-card::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:2px;
+    background:linear-gradient(90deg,var(--green),var(--accent));
+    transform:scaleX(0);transform-origin:left;transition:transform .3s;
+  }
+  .project-card:hover{transform:translateY(-4px);border-color:#2d4a3e;box-shadow:0 16px 40px rgba(0,0,0,.4);}
+  .project-card:hover::before{transform:scaleX(1);}
+  .proj-num{font-size:.75rem;color:var(--green);font-family:monospace;letter-spacing:.1em;}
+  .project-card h3{font-size:1.2rem;font-weight:700;color:#fff;}
+  .project-card p{color:var(--muted);font-size:.875rem;line-height:1.7;flex:1;}
+  .tags{display:flex;flex-wrap:wrap;gap:.4rem;}
+  .tag{
+    background:rgba(74,222,128,.08);color:var(--green);
+    border:1px solid rgba(74,222,128,.2);
+    border-radius:4px;padding:.2rem .55rem;font-size:.72rem;
+    font-family:monospace;letter-spacing:.03em;
+  }
+  .proj-link{
+    display:inline-flex;align-items:center;gap:.4rem;
+    color:var(--green);font-size:.85rem;text-decoration:none;
+    border:1px solid rgba(74,222,128,.3);border-radius:4px;
+    padding:.4rem .9rem;width:fit-content;
+    transition:background .2s,color .2s;
+  }
+  .proj-link:hover{background:var(--green);color:#000;}
+  .proj-link::after{content:'→';}
+
+  /* ─── EXPERIENCE ─── */
+  .exp-list{display:flex;flex-direction:column;gap:2rem;}
+  .exp-card{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:10px;padding:2rem;
+    border-left:3px solid var(--green);
+    transition:border-color .2s;
+  }
+  .exp-card:hover{border-color:var(--green2);}
+  .exp-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.5rem;margin-bottom:.75rem;}
+  .exp-card h3{font-size:1.2rem;font-weight:700;color:#fff;}
+  .exp-org{color:var(--green);font-size:.9rem;margin-bottom:.3rem;}
+  .exp-date{
+    background:rgba(74,222,128,.08);color:var(--green);
+    border:1px solid rgba(74,222,128,.2);
+    border-radius:20px;padding:.25rem .8rem;
+    font-size:.78rem;font-family:monospace;white-space:nowrap;
+  }
+  .exp-card ul{color:var(--muted);font-size:.875rem;line-height:1.7;padding-left:1.25rem;}
+  .exp-card li{margin-bottom:.4rem;}
+
+  /* ─── EDUCATION ─── */
+  .edu-card{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:10px;padding:2.5rem;
+    display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:start;
+  }
+  .edu-card h3{font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:.3rem;}
+  .edu-card h4{color:var(--green);font-size:1rem;margin-bottom:.2rem;}
+  .edu-card h5{color:var(--muted);font-size:.9rem;margin-bottom:1rem;}
+  .edu-card ul{color:var(--muted);font-size:.875rem;padding-left:1.25rem;}
+  .edu-card li{margin-bottom:.3rem;}
+  .edu-stats{display:flex;flex-direction:column;gap:1rem;}
+  .stat-box{
+    background:var(--bg3);border:1px solid var(--border);
+    border-radius:8px;padding:1rem 1.5rem;text-align:center;
+    min-width:100px;
+  }
+  .stat-val{font-size:1.8rem;font-weight:800;color:var(--green);display:block;font-family:monospace;}
+  .stat-label{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;}
+
+  /* ─── CONTACT ─── */
+  .contact-wrap{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:10px;padding:3rem;text-align:center;
+  }
+  .contact-wrap p{color:var(--muted);margin-bottom:2.5rem;font-size:1rem;}
+  .contact-wrap h3{font-size:1.6rem;font-weight:700;color:#fff;margin-bottom:.5rem;}
+  .contact-links{display:flex;justify-content:center;flex-wrap:wrap;gap:1rem;margin-top:1.5rem;}
+  .contact-item{
+    display:flex;align-items:center;gap:.5rem;
+    color:var(--muted);font-size:.9rem;
+    background:var(--bg3);border:1px solid var(--border);
+    border-radius:6px;padding:.6rem 1rem;
+    text-decoration:none;transition:border-color .2s,color .2s;
+  }
+  .contact-item:hover{border-color:var(--green);color:var(--green);}
+  .contact-icon{color:var(--green);font-size:1rem;}
+
+  /* ─── FOOTER ─── */
+  footer{
+    border-top:1px solid var(--border);
+    padding:1.5rem 3rem;
+    display:flex;align-items:center;justify-content:space-between;
+    flex-wrap:wrap;gap:1rem;
+  }
+  footer p{color:var(--muted);font-size:.82rem;}
+  footer ul{list-style:none;display:flex;gap:1.5rem;}
+  footer ul a{color:var(--muted);font-size:.82rem;text-decoration:none;transition:color .2s;}
+  footer ul a:hover{color:var(--green);}
+
+  @media(max-width:768px){
+    nav{padding:1rem 1.5rem;}
+    nav ul{gap:1rem;}
+    #hero,section{padding-left:1.5rem;padding-right:1.5rem;}
+    .about-grid{grid-template-columns:1fr;}
+    .edu-card{grid-template-columns:1fr;}
+    footer{flex-direction:column;align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">EAM</div>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-label">Welcome to my Portfolio</div>
+  <h1 class="name">Elizabeth Martinez</h1>
+  <h2 class="subtitle">Mechanical Engineering, Minor in Aerospace</h2>
+  <div class="code-block">const engineer = new MechanicalEngineer();</div>
+  <div class="scroll-hint">Scroll to explore</div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">About Me</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm Elizabeth Martinez, a Mechanical engineer student at Northeastern University pursuing a minor in Aerospace engineering.</p>
+      <p>I've spent the last several years finding that the best way to learn is to actually create things, from conception to finalization, and then do it all over again to make it better.</p>
+      <p>My start to engineering was through FIRST robotics, where I started as a designer, focusing on prototyping systems and being the person to 'wear many hats' as I had to quickly become skilled on new things as issues arose during the season. Over the course of my four years on the team, I grew to be Head Design Lead as well as Team President where I was running an 80-person team and managing the full lifecycle of robots starting from a drawing on a white board until a competition ready robot. That experience taught me how to make high-stakes decisions fast, integrate between different disciplines (design, electronics, programming, etc.), and lead people who may not know the first thing about engineering.</p>
+      <p>That drive and passion to grow my skills took me to an internship at NASA, where I designed and manufactured precision parts for a land terrain vehicle where I specifically made industry standard drawings, cut parts on a waterjet, and rewired a drivetrain.</p>
+      <p>Nowadays I mainly spend my time designing air brakes for a rocket with NU Aerospace, teaching SolidWorks certification courses to 150+ students a semester, and pushing myself into every hands-on opportunity I can find. Whether it's learning TIG welding or creating a smart trash can.</p>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <h4>Technical</h4>
+        <p>SolidWorks, AutoCAD, Onshape, MATLAB, Fusion, Prusa, Ultimaker Cura, C++, Java</p>
+      </div>
+      <div class="skill-card">
+        <h4>Prototyping</h4>
+        <p>FDM, SLA, Laser Cutter, Arduino, CNC Mill &amp; Router, Waterjet, Soldering, TIG &amp; MIG Welding, Power and Hand Tools</p>
+      </div>
+      <div class="skill-card">
+        <h4>Certifications</h4>
+        <p>Certified SolidWorks Associate (CSWA) Certified SolidWorks Professional (CSWP)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" style="max-width:1100px;margin:0 auto;">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Projects</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="proj-num">01</div>
+      <h3>Air Brakes</h3>
+      <p>As an Air Brakes Designer with NU Aerospace on the Launch Initiative rocket team, I design and 3D print PLA alignment jigs in SolidWorks to ensure precise attachment of the air brake body to the rocket airframe. In previous builds, many of the mounting holes were hand-drilled, which led to inconsistencies and longer assembly times, so I developed repeatable fixture designs that significantly improved alignment accuracy and reduced build time. I also designed a structural bulkhead for the rocket, working closely with the airframe team to integrate structural requirements into our design.</p>
+      <div class="tags">
+        <span class="tag">SolidWorks</span>
+        <span class="tag">FDM 3D Printing</span>
+        <span class="tag">Prusa</span>
+      </div>
+      <a class="proj-link" href="https://sites.google.com/view/eamartinez-portfolio/air-brakes" target="_blank">View Project</a>
+    </div>
+
+    <div class="project-card">
+      <div class="proj-num">02</div>
+      <h3>Self Tying Trash Can</h3>
+      <p>As Designer and Manufacturer, I designed and built a smart self-tying trash can in a six-week development cycle alongside 3 team members, integrating an Arduino microcontroller with a load cell and distance sensor to automate waste detection and bag closure. I iterated through more than five different tying mechanisms to identify a solution that was both fast and reliable, ultimately delivering a fully functional and manufacturable prototype. The system was developed with accessibility in mind, specifically to assist individuals with limited mobility.</p>
+      <div class="tags">
+        <span class="tag">SolidWorks</span>
+        <span class="tag">Prototyping</span>
+        <span class="tag">Arduino</span>
+        <span class="tag">FDM 3D Printing</span>
+        <span class="tag">Prusa</span>
+        <span class="tag">Soldering</span>
+      </div>
+      <a class="proj-link" href="https://sites.google.com/view/eamartinez-portfolio/self-tying-trash-can" target="_blank">View Project</a>
+    </div>
+
+    <div class="project-card">
+      <div class="proj-num">03</div>
+      <h3>Intaking System 2024</h3>
+      <p>As President and Head System Engineer for our FIRST Robotics team, I led an 80+ student organization through a full competitive season, overseeing system architecture, design reviews, budget allocation, and integration across 3–5 mechanical subteams. I designed a modular intake system using SolidWorks and CNC-routed polycarbonate to improve in-match consistency while allowing rapid replacement between matches. I also designed a lightweight sheet metal electrical board using FEA to reduce weight while maintaining structural integrity.</p>
+      <div class="tags">
+        <span class="tag">SolidWorks</span>
+        <span class="tag">FEA</span>
+        <span class="tag">GD&amp;T Drawings</span>
+        <span class="tag">CNC Router</span>
+        <span class="tag">Mill &amp; Lathe</span>
+        <span class="tag">Prototyping</span>
+        <span class="tag">Project Management</span>
+      </div>
+      <a class="proj-link" href="https://sites.google.com/view/eamartinez-portfolio/first-2024" target="_blank">View Project</a>
+    </div>
+
+    <div class="project-card">
+      <div class="proj-num">04</div>
+      <h3>Intaking System 2023</h3>
+      <p>As Systems Engineer for our 2023 FIRST Robotics season, I designed an intake mechanism capable of handling both inflatable cubes and rigid cones with a single system. The intake featured a polycarbonate inner roller tube with enlarged end caps, through which surgical tubing was strung to span the length of the roller; as the roller spun, the tubing expanded outward and conformed around the object, creating adaptive grip across varying shapes. I prototyped and tested numerous surgical tubing densities to balance durability and possession.</p>
+      <div class="tags">
+        <span class="tag">SolidWorks</span>
+        <span class="tag">Color Sensors</span>
+        <span class="tag">GD&amp;T Drawings</span>
+        <span class="tag">CNC Router</span>
+        <span class="tag">Prototyping</span>
+        <span class="tag">Project Management</span>
+      </div>
+      <a class="proj-link" href="https://sites.google.com/view/eamartinez-portfolio/first-2023" target="_blank">View Project</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Experience</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="exp-list">
+
+    <div class="exp-card">
+      <div class="exp-top">
+        <div>
+          <h3>CSWA Coordinator</h3>
+          <div class="exp-org">American Society of Mechanical Engineers (ASME)</div>
+        </div>
+        <span class="exp-date">Sept 2025 – Present</span>
+      </div>
+      <ul>
+        <li>Instruct a 7-week SolidWorks certification prep course each semester for 150+ students using lessons, hands-on practice, and Q&amp;A sessions, achieving a 98%+ certification pass rate.</li>
+        <li>Coordinate professional communication with 6–8 companies per semester, organizing 12 on-campus events that lead to student hiring, corporate sponsorships, and increased funding for future events.</li>
+        <li>Manage a team of 6–10 teaching assistants who previously earned their CSWA and are now pursuing CSWP, delegating question answering and student support to maintain a 98%+ certification pass rate.</li>
+        <li>Scale program enrollment from 80 to 150 to 170+ students over consecutive semesters, expanding operational capacity while maintaining course quality.</li>
+        <li>Increase ASME chapter funding by driving course growth, generating additional revenue to support future large-scale campus events.</li>
+      </ul>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-top">
+        <div>
+          <h3>Engineering Intern</h3>
+          <div class="exp-org">National Aeronautics and Space Administration (NASA)</div>
+        </div>
+        <span class="exp-date">Aug – Dec 2024</span>
+      </div>
+      <ul>
+        <li>Designed a custom tool carrier for Land Terrain Vehicle Ground Testing Unit (LTV-GTU) improving astronaut tool accessibility and storage efficiency using SolidWorks, created 30+ drawings for fabrication.</li>
+        <li>Manufactured 10+ parts for tool carrier using a waterjet, producing precise parts with custom specifications.</li>
+        <li>Re-wired and documented drive train for Space Exploration Vehicle (SEV) which enhanced traceability in the case of wire failure or replacement.</li>
+        <li>Refurbished 4 gearboxes and motor modules on SEV, allowing for a drivable testing unit.</li>
+        <li>Collaborated with 4–6 design interns and worked alongside a 25-member intern cohort at NASA, contributing to integrated mechanical and electrical projects.</li>
+        <li>Utilized SolidWorks PDM to manage version control, maintain engineering documentation, and ensure accurate release of 30+ fabrication drawings for manufacturing and assembly.</li>
+        <li>Iterated through multiple design reviews with engineers and technicians, incorporating feedback to optimize manufacturability and integration within existing vehicle.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Education</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="edu-card">
+    <div>
+      <h3>Bachelor of Science in Mechanical Engineering</h3>
+      <h4>Minor in Aerospace Engineering</h4>
+      <h5>Northeastern University</h5>
+      <ul>
+        <li>CSWA Coordinator for American Society of Mechanical Engineers (ASME)</li>
+        <li>Air Brakes Designer for NU Aerospace</li>
+      </ul>
+    </div>
+    <div class="edu-stats">
+      <div class="stat-box">
+        <span class="stat-val">3.4</span>
+        <span class="stat-label">GPA</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-val">2028</span>
+        <span class="stat-label">Graduation</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2 class="section-title">Contact</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="contact-wrap">
+    <h3>Elizabeth Martinez</h3>
+    <p>Feel free to reach out to me with any opportunities or questions.</p>
+    <div class="contact-links">
+      <a class="contact-item" href="mailto:martinez.eliz@northeastern.edu">
+        <span class="contact-icon">✉</span> martinez.eliz@northeastern.edu
+      </a>
+      <a class="contact-item" href="tel:8054221630">
+        <span class="contact-icon">📞</span> (805) 422-1630
+      </a>
+      <span class="contact-item">
+        <span class="contact-icon">📍</span> Boston, MA
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Elizabeth Martinez. All rights reserved.</p>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</footer>
+
+</body>
+</html>
