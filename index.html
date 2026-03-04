@@ -1,401 +1,359 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Luca Recchia</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luca Recchia | Bioengineering</title>
 <style>
-  *{margin:0;padding:0;box-sizing:border-box;}
-  :root{
-    --bg:#0a0a0f;
-    --bg2:#0f0f18;
-    --bg3:#13131f;
-    --green:#0da197;
-    --green2:#0fb6ae;
-    --accent:#00c27b;
-    --text:#e2e8f0;
-    --muted:#94a3b8;
-    --border:#1e293b;
-    --card:#0f1623;
-  }
-  html{scroll-behavior:smooth;}
-  body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
-  /* ─── NAV ─── */
-  nav{
-    position:fixed;top:0;left:0;right:0;z-index:100;
-    display:flex;align-items:center;justify-content:space-between;
-    padding:1.1rem 3rem;
-    background:rgba(10,10,15,0.85);
-    backdrop-filter:blur(12px);
-    border-bottom:1px solid var(--border);
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111119;
+    --surface2: #181824;
+    --border: #1f1f30;
+    --border-hover: #3a3a5c;
+    --text: #e8e8f0;
+    --text-secondary: #8888a4;
+    --accent: #6366f1;
+    --accent2: #8b5cf6;
+    --accent3: #06b6d4;
+    --gradient: linear-gradient(135deg, #6366f1, #8b5cf6, #06b6d4);
   }
-  .logo{font-size:1.35rem;font-weight:700;color:var(--green);letter-spacing:.05em;}
-  nav ul{list-style:none;display:flex;gap:2rem;}
-  nav ul a{color:var(--muted);text-decoration:none;font-size:.9rem;letter-spacing:.05em;transition:color .2s;}
-  nav ul a:hover{color:var(--green);}
 
-  /* ─── HERO ─── */
-  #hero{
-    min-height:100vh;display:flex;flex-direction:column;
-    justify-content:center;padding:0 3rem;
-    position:relative;overflow:hidden;
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    overflow-x: hidden;
   }
-  #hero::before{
-    content:'';position:absolute;inset:0;
-    background:radial-gradient(ellipse 60% 50% at 70% 50%, rgba(74,222,128,.06) 0%, transparent 70%);
+
+  /* NAV */
+  nav {
+    position: fixed; top:0; width:100%; z-index:100;
+    backdrop-filter: blur(24px);
+    background: rgba(10,10,15,0.75);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width:1100px; margin:auto;
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 16px 32px;
+  }
+  .nav-logo {
+    font-family:'Space Grotesk',sans-serif; font-weight:800; font-size:1.1rem;
+    background: var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    letter-spacing: 1px;
+  }
+  .nav-links { display:flex; gap:32px; list-style:none; }
+  .nav-links a {
+    color: var(--text-secondary); text-decoration:none; font-size:0.85rem; font-weight:500;
+    transition: color 0.3s; letter-spacing:0.3px;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .menu-btn {
+    display:none; padding:7px 20px; border-radius:8px; font-size:0.85rem; font-weight:500;
+    background:var(--surface2); color:var(--text-secondary); border:1px solid var(--border);
+    cursor:pointer; font-family:'Inter',sans-serif;
+  }
+
+  /* HERO */
+  .hero {
+    min-height:100vh; display:flex; align-items:center;
+    padding: 120px 0 80px; position:relative; overflow:hidden;
+  }
+  .hero::before {
+    content:''; position:absolute; top:-30%; right:-20%; width:600px; height:600px;
+    background: radial-gradient(circle, rgba(99,102,241,0.07) 0%, transparent 70%);
     pointer-events:none;
   }
-  .hero-label{
-    font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;
-    color:var(--green);margin-bottom:1.5rem;
-    display:flex;align-items:center;gap:.75rem;
+  .hero::after {
+    content:''; position:absolute; bottom:-20%; left:-10%; width:500px; height:500px;
+    background: radial-gradient(circle, rgba(6,182,212,0.05) 0%, transparent 70%);
+    pointer-events:none;
   }
-  .hero-label::before{content:'';width:2rem;height:1px;background:var(--green);}
-  h1.name{font-size:clamp(3rem,7vw,6rem);font-weight:800;line-height:1;color:#fff;margin-bottom:.75rem;}
-  h2.subtitle{font-size:clamp(1rem,2.5vw,1.5rem);font-weight:400;color:var(--muted);margin-bottom:2rem;}
-  .code-block{
-    display:inline-block;
-    background:var(--bg3);border:1px solid var(--border);
-    border-left:3px solid var(--green);
-    padding:.75rem 1.25rem;border-radius:4px;
-    font-family:'Courier New',monospace;font-size:.95rem;
-    color:var(--green);margin-bottom:3rem;
-  }
-  .scroll-hint{color:var(--muted);font-size:.8rem;letter-spacing:.1em;display:flex;align-items:center;gap:.5rem;}
-  .scroll-hint::after{content:'↓';color:var(--green);animation:bounce 1.5s infinite;}
-  @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(6px);}}
+  .container { max-width:1100px; margin:auto; padding:0 32px; position:relative; z-index:1; }
 
-  /* ─── SECTIONS ─── */
-  section{padding:6rem 3rem;max-width:1100px;margin:0 auto;}
-  .section-header{display:flex;align-items:center;gap:1rem;margin-bottom:3.5rem;}
-  .section-num{font-size:4rem;font-weight:800;color:rgba(74,222,128,.12);font-family:monospace;line-height:1;}
-  .section-title{font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:700;color:#fff;}
-  .section-line{flex:1;height:1px;background:var(--border);}
+  .hero-welcome {
+    font-family:'JetBrains Mono',monospace; font-size:0.85rem; color:var(--accent3);
+    margin-bottom:20px; opacity:0.9;
+  }
+  .hero h1 {
+    font-family:'Space Grotesk',sans-serif;
+    font-size: clamp(3rem, 7vw, 5rem);
+    font-weight:800; line-height:1.05; margin-bottom:16px;
+    letter-spacing:-1.5px;
+  }
+  .hero .subtitle {
+    font-family:'Space Grotesk',sans-serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    font-weight:500; color:var(--text-secondary); margin-bottom:40px;
+  }
 
-  /* ─── ABOUT ─── */
-  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;}
-  .about-text p{color:var(--muted);margin-bottom:1rem;font-size:.97rem;line-height:1.8;}
-  .skills-grid{display:grid;gap:1.5rem;}
-  .skill-card{
-    background:var(--card);border:1px solid var(--border);
-    border-radius:8px;padding:1.25rem 1.5rem;
-    transition:border-color .2s;
+  .hero-btns { display:flex; gap:14px; flex-wrap:wrap; }
+  .btn {
+    padding:13px 30px; border-radius:10px; font-size:0.9rem; font-weight:600;
+    text-decoration:none; transition: all 0.3s; cursor:pointer; border:none;
+    font-family:'Inter',sans-serif;
   }
-  .skill-card:hover{border-color:var(--green);}
-  .skill-card h4{color:var(--green);font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.5rem;}
-  .skill-card p{color:var(--muted);font-size:.88rem;line-height:1.6;}
+  .btn-primary {
+    background: var(--gradient); color:#fff;
+    box-shadow: 0 4px 24px rgba(99,102,241,0.25);
+  }
+  .btn-primary:hover { transform:translateY(-2px); box-shadow: 0 8px 32px rgba(99,102,241,0.4); }
+  .btn-outline { background:transparent; color:var(--text); border:1px solid var(--border); }
+  .btn-outline:hover { border-color:var(--accent); color:var(--accent); }
 
-  /* ─── PROJECTS ─── */
-  .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;}
-  .project-card{
-    background:var(--card);border:1px solid var(--border);
-    border-radius:10px;padding:1.75rem;
-    display:flex;flex-direction:column;gap:1rem;
-    transition:transform .2s,border-color .2s,box-shadow .2s;
-    position:relative;overflow:hidden;
+  /* SECTION NUMBERING */
+  .section-num {
+    font-family:'Space Grotesk',sans-serif; font-size:4rem; font-weight:800;
+    background: var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    opacity:0.15; line-height:1; margin-bottom:-10px;
   }
-  .project-card::before{
-    content:'';position:absolute;top:0;left:0;right:0;height:2px;
-    background:linear-gradient(90deg,var(--green),var(--accent));
-    transform:scaleX(0);transform-origin:left;transition:transform .3s;
+  .section-header { margin-bottom:48px; }
+  .section-title {
+    font-family:'Space Grotesk',sans-serif; font-size:2rem; font-weight:700;
   }
-  .project-card:hover{transform:translateY(-4px);border-color:#2d4a3e;box-shadow:0 16px 40px rgba(0,0,0,.4);}
-  .project-card:hover::before{transform:scaleX(1);}
-  .proj-num{font-size:.75rem;color:var(--green);font-family:monospace;letter-spacing:.1em;}
-  .project-card h3{font-size:1.2rem;font-weight:700;color:#fff;}
-  .project-card p{color:var(--muted);font-size:.875rem;line-height:1.7;flex:1;}
-  .tags{display:flex;flex-wrap:wrap;gap:.4rem;}
-  .tag{
-    background:rgba(74,222,128,.08);color:var(--green);
-    border:1px solid rgba(74,222,128,.2);
-    border-radius:4px;padding:.2rem .55rem;font-size:.72rem;
-    font-family:monospace;letter-spacing:.03em;
-  }
-  .proj-link{
-    display:inline-flex;align-items:center;gap:.4rem;
-    color:var(--green);font-size:.85rem;text-decoration:none;
-    border:1px solid rgba(74,222,128,.3);border-radius:4px;
-    padding:.4rem .9rem;width:fit-content;
-    transition:background .2s,color .2s;
-  }
-  .proj-link:hover{background:var(--green);color:#000;}
-  .proj-link::after{content:'→';}
 
-  /* ─── EXPERIENCE ─── */
-  .exp-list{display:flex;flex-direction:column;gap:2rem;}
-  .exp-card{
-    background:var(--card);border:1px solid var(--border);
-    border-radius:10px;padding:2rem;
-    border-left:3px solid var(--green);
-    transition:border-color .2s;
-  }
-  .exp-card:hover{border-color:var(--green2);}
-  .exp-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.5rem;margin-bottom:.75rem;}
-  .exp-card h3{font-size:1.2rem;font-weight:700;color:#fff;}
-  .exp-org{color:var(--green);font-size:.9rem;margin-bottom:.3rem;}
-  .exp-date{
-    background:rgba(74,222,128,.08);color:var(--green);
-    border:1px solid rgba(74,222,128,.2);
-    border-radius:20px;padding:.25rem .8rem;
-    font-size:.78rem;font-family:monospace;white-space:nowrap;
-  }
-  .exp-card ul{color:var(--muted);font-size:.875rem;line-height:1.7;padding-left:1.25rem;}
-  .exp-card li{margin-bottom:.4rem;}
+  /* ABOUT */
+  #about { padding:100px 0 80px; }
+  .about-text { color:var(--text-secondary); font-size:0.95rem; max-width:800px; }
+  .about-text p+p { margin-top:16px; }
 
-  /* ─── EDUCATION ─── */
-  .edu-card{
-    background:var(--card);border:1px solid var(--border);
-    border-radius:10px;padding:2.5rem;
-    display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:start;
+  .skills-section { margin-top:36px; }
+  .skills-section h4 {
+    font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:1.5px;
+    color:var(--accent); margin-bottom:10px; margin-top:20px;
   }
-  .edu-card h3{font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:.3rem;}
-  .edu-card h4{color:var(--green);font-size:1rem;margin-bottom:.2rem;}
-  .edu-card h5{color:var(--muted);font-size:.9rem;margin-bottom:1rem;}
-  .edu-card ul{color:var(--muted);font-size:.875rem;padding-left:1.25rem;}
-  .edu-card li{margin-bottom:.3rem;}
-  .edu-stats{display:flex;flex-direction:column;gap:1rem;}
-  .stat-box{
-    background:var(--bg3);border:1px solid var(--border);
-    border-radius:8px;padding:1rem 1.5rem;text-align:center;
-    min-width:100px;
+  .skills-section h4:first-child { margin-top:0; }
+  .skill-tags { display:flex; flex-wrap:wrap; gap:8px; }
+  .skill-tag {
+    padding:5px 14px; border-radius:8px; font-size:0.78rem; font-weight:500;
+    background:var(--surface2); color:var(--text-secondary); border:1px solid var(--border);
+    transition: all 0.3s;
   }
-  .stat-val{font-size:1.8rem;font-weight:800;color:var(--green);display:block;font-family:monospace;}
-  .stat-label{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;}
+  .skill-tag:hover { border-color:var(--accent); color:var(--text); }
 
-  /* ─── CONTACT ─── */
-  .contact-wrap{
-    background:var(--card);border:1px solid var(--border);
-    border-radius:10px;padding:3rem;text-align:center;
+  /* PROJECTS */
+  #projects { padding:80px 0; }
+  .project-card {
+    display:grid; grid-template-columns:auto 1fr; gap:32px;
+    background:var(--surface); border:1px solid var(--border); border-radius:18px;
+    padding:36px; margin-bottom:24px; transition: all 0.3s; position:relative; overflow:hidden;
   }
-  .contact-wrap p{color:var(--muted);margin-bottom:2.5rem;font-size:1rem;}
-  .contact-wrap h3{font-size:1.6rem;font-weight:700;color:#fff;margin-bottom:.5rem;}
-  .contact-links{display:flex;justify-content:center;flex-wrap:wrap;gap:1rem;margin-top:1.5rem;}
-  .contact-item{
-    display:flex;align-items:center;gap:.5rem;
-    color:var(--muted);font-size:.9rem;
-    background:var(--bg3);border:1px solid var(--border);
-    border-radius:6px;padding:.6rem 1rem;
-    text-decoration:none;transition:border-color .2s,color .2s;
+  .project-card::before {
+    content:''; position:absolute; top:0; left:0; width:100%; height:2px;
+    background:var(--gradient); opacity:0; transition: opacity 0.3s;
   }
-  .contact-item:hover{border-color:var(--green);color:var(--green);}
-  .contact-icon{color:var(--green);font-size:1rem;}
+  .project-card:hover { border-color:var(--border-hover); transform:translateY(-3px); }
+  .project-card:hover::before { opacity:1; }
+  .project-index {
+    font-family:'Space Grotesk',sans-serif; font-size:3.5rem; font-weight:800;
+    background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    opacity:0.2; line-height:1; min-width:60px;
+  }
+  .project-card h3 { font-size:1.15rem; font-weight:700; margin-bottom:6px; font-family:'Space Grotesk',sans-serif; }
+  .project-meta {
+    font-family:'JetBrains Mono',monospace; font-size:0.76rem; color:var(--accent3);
+    margin-bottom:14px;
+  }
+  .project-desc { font-size:0.9rem; color:var(--text-secondary); line-height:1.8; }
+  .project-tags { display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+  .project-tags span {
+    font-size:0.72rem; padding:5px 12px; border-radius:6px;
+    background:rgba(99,102,241,0.08); color:var(--accent); font-weight:600;
+    border:1px solid rgba(99,102,241,0.15);
+  }
 
-  /* ─── FOOTER ─── */
-  footer{
+  /* EDUCATION */
+  #education { padding:80px 0; }
+  .edu-card {
+    background:var(--surface); border:1px solid var(--border); border-radius:18px;
+    padding:36px; display:flex; justify-content:space-between; align-items:center;
+    flex-wrap:wrap; gap:24px; transition: border-color 0.3s;
+  }
+  .edu-card:hover { border-color:var(--border-hover); }
+  .edu-card h3 { font-size:1.1rem; font-weight:700; font-family:'Space Grotesk',sans-serif; }
+  .edu-card .school { color:var(--accent); font-size:0.9rem; font-weight:500; margin-top:2px; }
+  .edu-card .activities { color:var(--text-secondary); font-size:0.85rem; margin-top:10px; }
+  .edu-stats { display:flex; gap:24px; }
+  .edu-stat { text-align:center; }
+  .edu-stat .val {
+    font-family:'Space Grotesk',sans-serif; font-size:2rem; font-weight:800;
+    background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  }
+  .edu-stat .label { font-size:0.75rem; color:var(--text-secondary); text-transform:uppercase; letter-spacing:1px; }
+
+  /* CONTACT */
+  #contact { padding:80px 0 100px; }
+  .contact-box {
+    background:var(--surface); border:1px solid var(--border); border-radius:20px;
+    padding:56px; text-align:center; position:relative; overflow:hidden;
+  }
+  .contact-box::before {
+    content:''; position:absolute; top:-50%; left:-50%; width:200%; height:200%;
+    background:radial-gradient(circle, rgba(99,102,241,0.04), transparent 60%);
+  }
+  .contact-box h2 {
+    font-family:'Space Grotesk',sans-serif; font-size:2rem; font-weight:700;
+    margin-bottom:8px; position:relative;
+  }
+  .contact-name {
+    font-family:'JetBrains Mono',monospace; font-size:0.85rem; color:var(--accent3);
+    margin-bottom:24px; position:relative;
+  }
+  .contact-box>p { color:var(--text-secondary); margin-bottom:32px; position:relative; font-size:0.95rem; }
+  .contact-links {
+    display:flex; justify-content:center; gap:14px; flex-wrap:wrap; position:relative;
+  }
+  .contact-link {
+    display:flex; align-items:center; gap:8px;
+    padding:12px 22px; border-radius:10px;
+    background:var(--surface2); border:1px solid var(--border);
+    color:var(--text); text-decoration:none; font-size:0.85rem; font-weight:500;
+    transition: all 0.3s;
+  }
+  .contact-link:hover { border-color:var(--accent); color:var(--accent); transform:translateY(-2px); }
+
+  footer {
+    text-align:center; padding:28px; font-size:0.78rem; color:var(--text-secondary);
     border-top:1px solid var(--border);
-    padding:1.5rem 3rem;
-    display:flex;align-items:center;justify-content:space-between;
-    flex-wrap:wrap;gap:1rem;
   }
-  footer p{color:var(--muted);font-size:.82rem;}
-  footer ul{list-style:none;display:flex;gap:1.5rem;}
-  footer ul a{color:var(--muted);font-size:.82rem;text-decoration:none;transition:color .2s;}
-  footer ul a:hover{color:var(--green);}
+  footer a { color:var(--text-secondary); text-decoration:none; margin:0 12px; transition:color 0.3s; }
+  footer a:hover { color:var(--text); }
 
-  @media(max-width:768px){
-    nav{padding:1rem 1.5rem;}
-    nav ul{gap:1rem;}
-    #hero,section{padding-left:1.5rem;padding-right:1.5rem;}
-    .about-grid{grid-template-columns:1fr;}
-    .edu-card{grid-template-columns:1fr;}
-    footer{flex-direction:column;align-items:flex-start;}
+  @media(max-width:768px) {
+    .nav-links { display:none; }
+    .menu-btn { display:block; }
+    .project-card { grid-template-columns:1fr; }
+    .project-index { font-size:2rem; }
+    .edu-card { flex-direction:column; align-items:flex-start; }
+    .contact-box { padding:36px 24px; }
   }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
-  <div class="logo">LCR</div>
-  <ul>
-    <li><a href="#about">About</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#education">Education</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
+  <div class="nav-inner">
+    <div class="nav-logo">LR</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="menu-btn">Menu</button>
+  </div>
 </nav>
 
 <!-- HERO -->
-<div id="hero">
-  <div class="hero-label">Welcome to my Portfolio</div>
-  <h1 class="name">Luca Recchia</h1>
-  <h2 class="subtitle">Biomedical Engineering, Minor in Music Prodution and Recording</h2>
-  <div class="scroll-hint">Scroll to explore</div>
-</div>
+<section class="hero">
+  <div class="container">
+    <p class="hero-welcome">Welcome to my Portfolio</p>
+    <h1>Luca Recchia</h1>
+    <p class="subtitle">Bioengineering, Northeastern University</p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn btn-primary">View My Work</a>
+      <a href="#contact" class="btn btn-outline">Get in Touch</a>
+    </div>
+  </div>
+</section>
 
 <!-- ABOUT -->
 <section id="about">
-  <div class="section-header">
-    <span class="section-num">01</span>
-    <h2 class="section-title">About Me</h2>
-    <div class="section-line"></div>
-  </div>
-  <div class="about-grid">
-    <div class="about-text">
-      <p> I’m Luca Recchia, a Bioengineering student at Northeastern University with a strong focus on biomechanics, medical devices, and applying engineering to real-world health challenges. Over the past several years, I’ve realized that the best way for me to learn is by building—taking an idea from a rough concept, turning it into something tangible, testing it, breaking it, and refining it until it actually works. That cycle of designing, analyzing, and improving is what drives me. My foundation in engineering has been deeply hands-on. Through coursework and project-based work in biomechanics and physiology, I’ve worked on structural analyses, implant design concepts, and mechanical modeling problems that require balancing theory with real-world constraints. I’m especially interested in how forces, materials, and biological systems interact—whether that’s analyzing internal loads, thinking about implant stiffness and stress distribution, or modeling how a system behaves under repeated loading. Beyond the classroom, I actively seek out opportunities that push me technically and professionally. I’ve pursued competitive co-ops and internships in biotech and pharma, preparing for roles that blend engineering, data, and translational research. I’m motivated by environments where I can contribute meaningfully, collaborate across disciplines, and continue developing both technical depth and leadership skills. Right now, I spend most of my time diving into advanced STEM coursework, preparing for co-op roles, and refining my technical toolkit—whether that’s through MATLAB modeling, mechanical analysis, or tackling complex problem sets that demand precision and persistence. I’m constantly looking for ways to expand what I can build and understand, especially in areas that sit at the intersection of engineering innovation and human health.
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <h2 class="section-title">About Me</h2>
     </div>
-    <div class="skills-grid">
-      <div class="skill-card">
-        <h4>Technical</h4>
-        <p>SolidWorks, AutoCAD, Ansys Discovery, Onshape, MATLAB, C++</p>
+    <div class="about-text">
+      <p>I'm Luca Recchia, a Bioengineering student at Northeastern University with a focus on design, prototyping, and hands-on problem solving. I'm drawn to the full lifecycle of a product — from the first sketch to a working prototype — and I've spent the last few years building that skill set through increasingly complex engineering challenges.</p>
+      <p>My design experience started with coursework in SolidWorks and AutoCAD, where I learned to translate ideas into precise 3D models ready for fabrication. That foundation quickly grew into real-world application: I've designed and 3D-printed custom mechanical components, built Arduino-powered electromechanical systems, and engineered structural solutions under real field constraints. With Engineering Without Borders, I designed a water tank stand for a community in Uganda, working within the limits of steep terrain and limited resources to create something that could actually be built and maintained on-site. During my time studying abroad in London, I took two design projects from concept to completion — an accessible automated waste disposal system and a maze-navigating robot — each requiring rapid iteration, prototyping, and integration of electronics with physical assemblies.</p>
+      <p>I'm always looking for the next thing to design and build, whether that's a mechanical system, a piece of infrastructure, or a song — I also sing with Distilled Harmony and produce music in my free time.</p>
+    </div>
+    <div class="skills-section">
+      <h4>Design & Modeling</h4>
+      <div class="skill-tags">
+        <span class="skill-tag">SolidWorks</span>
+        <span class="skill-tag">AutoCAD</span>
+        <span class="skill-tag">3D Modeling</span>
+        <span class="skill-tag">3D Printing</span>
+        <span class="skill-tag">Circuit Design</span>
       </div>
-      <div class="skill-card">
-        <h4>Prototyping</h4>
-        <p>Arduino, 3D Modeling and Printing</p>
+      <h4>Programming</h4>
+      <div class="skill-tags">
+        <span class="skill-tag">MATLAB</span>
+        <span class="skill-tag">C++</span>
+        <span class="skill-tag">Arduino</span>
       </div>
-      <div class="skill-card">
-        <h4>Lab Skills</h4>
-        <p>Aseptic technique, Pipetting, Mammalian Cell Culture, PCR, Image Analysis, General Laboratory Safety</p>
+      <h4>Lab & Analysis</h4>
+      <div class="skill-tags">
+        <span class="skill-tag">Aseptic Technique</span>
+        <span class="skill-tag">Cell Culture</span>
+        <span class="skill-tag">PCR</span>
+        <span class="skill-tag">ImageJ</span>
+        <span class="skill-tag">Statistical Analysis</span>
       </div>
     </div>
   </div>
 </section>
 
 <!-- PROJECTS -->
-<section id="projects" style="max-width:1100px;margin:0 auto;">
-  <div class="section-header">
-    <span class="section-num">02</span>
-    <h2 class="section-title">Projects</h2>
-    <div class="section-line"></div>
-  </div>
-  <div class="projects-grid">
-
-    <div class="project-card">
-      <div class="proj-num">01</div>
-      <h3>Tank Stand</h3>
-      <p>As an Air Brakes Designer with NU Aerospace on the Launch Initiative rocket team, I design and 3D print PLA alignment jigs in SolidWorks to ensure precise attachment of the air brake body to the rocket airframe. In previous builds, many of the mounting holes were hand-drilled, which led to inconsistencies and longer assembly times, so I developed repeatable fixture designs that significantly improved alignment accuracy and reduced build time. I also designed a structural bulkhead for the rocket, working closely with the airframe team to integrate structural requirements into our design.</p>
-      <div class="tags">
-        <span class="tag">SolidWorks</span>
-        <span class="tag">FDM 3D Printing</span>
-        <span class="tag">Prusa</span>
-      </div>
-      <a class="proj-link" href="https://sites.google.com/view/eamartinez-portfolio/air-brakes" target="_blank">View Project</a>
+<section id="projects">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">02</div>
+      <h2 class="section-title">Projects</h2>
     </div>
 
     <div class="project-card">
-      <div class="proj-num">02</div>
-      <h3>Self Tying Trash Can</h3>
-      <p>As Designer and Manufacturer, I designed and built a smart self-tying trash can in a six-week development cycle alongside 3 team members, integrating an Arduino microcontroller with a load cell and distance sensor to automate waste detection and bag closure. I iterated through more than five different tying mechanisms to identify a solution that was both fast and reliable, ultimately delivering a fully functional and manufacturable prototype. The system was developed with accessibility in mind, specifically to assist individuals with limited mobility.</p>
-      <div class="tags">
-        <span class="tag">SolidWorks</span>
-        <span class="tag">Prototyping</span>
-        <span class="tag">Arduino</span>
-        <span class="tag">FDM 3D Printing</span>
-        <span class="tag">Prusa</span>
-        <span class="tag">Soldering</span>
+      <div class="project-index">01</div>
+      <div>
+        <h3>Water Tank Stand — Engineering Without Borders</h3>
+        <div class="project-meta">EWB Uganda Project · Fall 2025</div>
+        <p class="project-desc">As a designer on the Engineering Without Borders team, I helped develop a structurally sound water tank stand to support and stabilize potable water storage for a rural community in Uganda. The project required careful planning around how and where to place the system so that water could flow naturally down steep mountainous terrain, improving the community's access to clean drinking water through a gravity-fed distribution approach. Working within tight field constraints — limited materials, remote location, and challenging geography — I applied core engineering design principles and iterative problem-solving to arrive at a practical, sustainable solution that could be realistically constructed and maintained by the community with depleted resources.</p>
+        <div class="project-tags"><span>Structural Design</span><span>Sustainability</span><span>Humanitarian Engineering</span><span>Field Constraints</span></div>
       </div>
-      <a class="proj-link" href="https://sites.google.com/view/eamartinez-portfolio/self-tying-trash-can" target="_blank">View Project</a>
     </div>
 
     <div class="project-card">
-      <div class="proj-num">03</div>
-      <h3>Intaking System 2024</h3>
-      <p>As President and Head System Engineer for our FIRST Robotics team, I led an 80+ student organization through a full competitive season, overseeing system architecture, design reviews, budget allocation, and integration across 3–5 mechanical subteams. I designed a modular intake system using SolidWorks and CNC-routed polycarbonate to improve in-match consistency while allowing rapid replacement between matches. I also designed a lightweight sheet metal electrical board using FEA to reduce weight while maintaining structural integrity.</p>
-      <div class="tags">
-        <span class="tag">SolidWorks</span>
-        <span class="tag">FEA</span>
-        <span class="tag">GD&amp;T Drawings</span>
-        <span class="tag">CNC Router</span>
-        <span class="tag">Mill &amp; Lathe</span>
-        <span class="tag">Prototyping</span>
-        <span class="tag">Project Management</span>
+      <div class="project-index">02</div>
+      <div>
+        <h3>STEM Accessible Garbage Can</h3>
+        <div class="project-meta">Cornerstone of Engineering II · London, UK · Spring 2025</div>
+        <p class="project-desc">For my Cornerstone of Engineering II design project, my team and I designed and built a fully automated waste disposal system optimized for everyday use with a focus on enhanced accessibility for individuals with disabilities. The mechanical design was done entirely in SolidWorks, where I modeled custom components that were then 3D-printed and assembled together to form the final product — each piece had to fit precisely into the overall structure while remaining easy to manufacture and replace. The electronics side was powered by an Arduino microcontroller, with a circuit that integrated switches, motors, transmitters, and wiring all mounted to the base and lid. The project required constant iteration between the CAD model and the physical prototype, adjusting tolerances and rethinking component placement as we tested and refined each version.</p>
+        <div class="project-tags"><span>SolidWorks</span><span>3D Printing</span><span>Arduino</span><span>Prototyping</span><span>Accessibility</span></div>
       </div>
-      <a class="proj-link" href="https://sites.google.com/view/eamartinez-portfolio/first-2024" target="_blank">View Project</a>
     </div>
-
-    <div class="project-card">
-      <div class="proj-num">04</div>
-      <h3>Intaking System 2023</h3>
-      <p>As Systems Engineer for our 2023 FIRST Robotics season, I designed an intake mechanism capable of handling both inflatable cubes and rigid cones with a single system. The intake featured a polycarbonate inner roller tube with enlarged end caps, through which surgical tubing was strung to span the length of the roller; as the roller spun, the tubing expanded outward and conformed around the object, creating adaptive grip across varying shapes. I prototyped and tested numerous surgical tubing densities to balance durability and possession.</p>
-      <div class="tags">
-        <span class="tag">SolidWorks</span>
-        <span class="tag">Color Sensors</span>
-        <span class="tag">GD&amp;T Drawings</span>
-        <span class="tag">CNC Router</span>
-        <span class="tag">Prototyping</span>
-        <span class="tag">Project Management</span>
-      </div>
-      <a class="proj-link" href="https://sites.google.com/view/eamartinez-portfolio/first-2023" target="_blank">View Project</a>
-    </div>
-
-  </div>
-</section>
-
-<!-- EXPERIENCE -->
-<section id="experience">
-  <div class="section-header">
-    <span class="section-num">03</span>
-    <h2 class="section-title">Experience</h2>
-    <div class="section-line"></div>
-  </div>
-  <div class="exp-list">
-
-    <div class="exp-card">
-      <div class="exp-top">
-        <div>
-          <h3>CSWA Coordinator</h3>
-          <div class="exp-org">American Society of Mechanical Engineers (ASME)</div>
-        </div>
-        <span class="exp-date">Sept 2025 – Present</span>
-      </div>
-      <ul>
-        <li>Instruct a 7-week SolidWorks certification prep course each semester for 150+ students using lessons, hands-on practice, and Q&amp;A sessions, achieving a 98%+ certification pass rate.</li>
-        <li>Coordinate professional communication with 6–8 companies per semester, organizing 12 on-campus events that lead to student hiring, corporate sponsorships, and increased funding for future events.</li>
-        <li>Manage a team of 6–10 teaching assistants who previously earned their CSWA and are now pursuing CSWP, delegating question answering and student support to maintain a 98%+ certification pass rate.</li>
-        <li>Scale program enrollment from 80 to 150 to 170+ students over consecutive semesters, expanding operational capacity while maintaining course quality.</li>
-        <li>Increase ASME chapter funding by driving course growth, generating additional revenue to support future large-scale campus events.</li>
-      </ul>
-    </div>
-
-    <div class="exp-card">
-      <div class="exp-top">
-        <div>
-          <h3>Engineering Intern</h3>
-          <div class="exp-org">National Aeronautics and Space Administration (NASA)</div>
-        </div>
-        <span class="exp-date">Aug – Dec 2024</span>
-      </div>
-      <ul>
-        <li>Designed a custom tool carrier for Land Terrain Vehicle Ground Testing Unit (LTV-GTU) improving astronaut tool accessibility and storage efficiency using SolidWorks, created 30+ drawings for fabrication.</li>
-        <li>Manufactured 10+ parts for tool carrier using a waterjet, producing precise parts with custom specifications.</li>
-        <li>Re-wired and documented drive train for Space Exploration Vehicle (SEV) which enhanced traceability in the case of wire failure or replacement.</li>
-        <li>Refurbished 4 gearboxes and motor modules on SEV, allowing for a drivable testing unit.</li>
-        <li>Collaborated with 4–6 design interns and worked alongside a 25-member intern cohort at NASA, contributing to integrated mechanical and electrical projects.</li>
-        <li>Utilized SolidWorks PDM to manage version control, maintain engineering documentation, and ensure accurate release of 30+ fabrication drawings for manufacturing and assembly.</li>
-        <li>Iterated through multiple design reviews with engineers and technicians, incorporating feedback to optimize manufacturability and integration within existing vehicle.</li>
-      </ul>
-    </div>
-
   </div>
 </section>
 
 <!-- EDUCATION -->
 <section id="education">
-  <div class="section-header">
-    <span class="section-num">04</span>
-    <h2 class="section-title">Education</h2>
-    <div class="section-line"></div>
-  </div>
-  <div class="edu-card">
-    <div>
-      <h3>Bachelor of Science in Mechanical Engineering</h3>
-      <h4>Minor in Aerospace Engineering</h4>
-      <h5>Northeastern University</h5>
-      <ul>
-        <li>CSWA Coordinator for American Society of Mechanical Engineers (ASME)</li>
-        <li>Air Brakes Designer for NU Aerospace</li>
-      </ul>
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">03</div>
+      <h2 class="section-title">Education</h2>
     </div>
-    <div class="edu-stats">
-      <div class="stat-box">
-        <span class="stat-val">3.4</span>
-        <span class="stat-label">GPA</span>
+    <div class="edu-card">
+      <div>
+        <h3>Bachelor of Science in Bioengineering</h3>
+        <div class="school">Northeastern University</div>
+        <div class="activities">Engineering Without Borders · Distilled Harmony (A Cappella) · Studied Abroad in London, UK</div>
       </div>
-      <div class="stat-box">
-        <span class="stat-val">2028</span>
-        <span class="stat-label">Graduation</span>
+      <div class="edu-stats">
+        <div class="edu-stat">
+          <div class="val">3.4</div>
+          <div class="label">GPA</div>
+        </div>
+        <div class="edu-stat">
+          <div class="val">2028</div>
+          <div class="label">Graduation</div>
+        </div>
       </div>
     </div>
   </div>
@@ -403,38 +361,33 @@
 
 <!-- CONTACT -->
 <section id="contact">
-  <div class="section-header">
-    <span class="section-num">05</span>
-    <h2 class="section-title">Contact</h2>
-    <div class="section-line"></div>
-  </div>
-  <div class="contact-wrap">
-    <h3>Luca Recchia</h3>
-    <p>Feel free to reach out to me with any opportunities or questions.</p>
-    <div class="contact-links">
-      <a class="contact-item" href="mailto:martinez.eliz@northeastern.edu">
-        <span class="contact-icon">✉</span> martinez.eliz@northeastern.edu
-      </a>
-      <a class="contact-item" href="tel:8054221630">
-        <span class="contact-icon">📞</span> (805) 422-1630
-      </a>
-      <span class="contact-item">
-        <span class="contact-icon">📍</span> Boston, MA
-      </span>
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">04</div>
+      <h2 class="section-title">Contact</h2>
+    </div>
+    <div class="contact-box">
+      <h2>Let's Build Something</h2>
+      <div class="contact-name">Luca Recchia</div>
+      <p>Feel free to reach out with any opportunities or questions.</p>
+      <div class="contact-links">
+        <a href="mailto:recchia.l@northeastern.edu" class="contact-link">✉️ recchia.l@northeastern.edu</a>
+        <a href="tel:6154381634" class="contact-link">📱 (615) 438-1634</a>
+        <a href="https://www.linkedin.com/in/luca-recchia2028" target="_blank" class="contact-link">🔗 LinkedIn</a>
+        <span class="contact-link">📍 Boston, MA</span>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
-  <p>© 2026 Luca Recchia. All rights reserved.</p>
-  <ul>
-    <li><a href="#about">About</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#education">Education</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
+  <div>&copy; 2026 Luca Recchia. All rights reserved.</div>
+  <div style="margin-top:10px;">
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#education">Education</a>
+    <a href="#contact">Contact</a>
+  </div>
 </footer>
 
 </body>
